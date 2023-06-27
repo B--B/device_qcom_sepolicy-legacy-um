@@ -30,9 +30,14 @@ type mm-qcamerad_exec, exec_type, vendor_file_type, file_type;
 init_daemon_domain(mm-qcamerad)
 
 #added to support EZTune for camera
+no_debugfs_restriction(`
+  userdebug_or_eng(`
+    allow mm-qcamerad qti_debugfs:dir r_dir_perms;
+    allow mm-qcamerad qti_debugfs:file read;
+  ')
+')
+
 userdebug_or_eng(`
-  allow mm-qcamerad qti_debugfs:dir r_dir_perms;
-  allow mm-qcamerad qti_debugfs:file read;
   #allow mm-qcamerad self:tcp_socket create_stream_socket_perms;
   allow mm-qcamerad node:tcp_socket node_bind;
 
